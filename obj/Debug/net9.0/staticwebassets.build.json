@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "7WspTi3JQ2QQZCHmzYtLpK5iF+ZTuFJr/jGHen/uDXg=",
+  "Source": "TinyUrlService",
+  "BasePath": "_content/TinyUrlService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
