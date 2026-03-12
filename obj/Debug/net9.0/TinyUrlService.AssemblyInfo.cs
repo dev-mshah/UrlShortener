@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TinyUrlService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+788930800c01424c5bcf17c530087c229d21205b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5055eb23ae7d3c95f21f7eca73c282ae815d8769")]
 [assembly: System.Reflection.AssemblyProductAttribute("TinyUrlService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TinyUrlService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
