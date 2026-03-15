@@ -8,9 +8,14 @@ public class Redis
 
     public Redis(IConfiguration config)
     {
-        var connection = ConnectionMultiplexer.Connect(
-            config.GetConnectionString("Redis")!
-        );
+        var redisUrl = Environment.GetEnvironmentVariable("REDIS_CONNECTION") ?? config.GetConnectionString("Redis");
+        ;
+
+        var options = ConfigurationOptions.Parse(redisUrl);
+        options.Ssl = true;                 // Upstash requires TLS
+        options.AbortOnConnectFail = false; // don't crash on startup
+
+        var connection = ConnectionMultiplexer.Connect(options);
 
         Db = connection.GetDatabase();
     }
