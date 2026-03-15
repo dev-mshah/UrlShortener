@@ -8,7 +8,14 @@ public class Postgres
 
     public Postgres(IConfiguration config)
     {
-        _connectionString = config.GetConnectionString("Postgres")!;
+        // Try environment variable first (recommended for Render)
+        _connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION")
+                            ?? config.GetConnectionString("Postgres");
+
+        if (string.IsNullOrEmpty(_connectionString))
+        {
+            throw new Exception("Postgres connection string is missing. Set POSTGRES_CONNECTION or add it to appsettings.json.");
+        }
     }
 
     public NpgsqlConnection GetConnection()
