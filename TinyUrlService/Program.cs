@@ -20,9 +20,12 @@ app.MapPost("/shorten", async (CreateUrlRequest req, UrlService urlService) =>
 {
     var shortId = await urlService.CreateShortUrl(req.Url);
 
+    var baseUrl = Environment.GetEnvironmentVariable("BASE_URL")
+                  ?? "http://localhost:5048";
+
     return Results.Ok(new
     {
-        shortUrl = $"http://localhost:5048/{shortId}"
+        shortUrl = $"{baseUrl}/{shortId}"
     });
 });
 
