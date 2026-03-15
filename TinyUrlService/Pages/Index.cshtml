@@ -1,0 +1,15 @@
+@page
+@model IndexModel
+
+<h1>URL Shortener</h1>
+
+<form method="post">
+    <input type="text" name="LongUrl" placeholder="Enter URL" style="width:300px;" />
+    <button type="submit">Shorten</button>
+</form>
+
+@if (Model.ShortUrl != null)
+{
+    <p>Your short URL:</p>
+    <a href="@Model.ShortUrl">@Model.ShortUrl</a>
+}

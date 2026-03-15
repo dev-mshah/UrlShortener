@@ -120,3 +120,5 @@
 /Users/user/Developer/tinyurl/TinyUrlService/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /Users/user/Developer/tinyurl/TinyUrlService/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /Users/user/Developer/tinyurl/TinyUrlService/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/user/Developer/tinyurl/TinyUrlService/obj/Debug/net9.0/TinyUrlService.RazorAssemblyInfo.cache
+/Users/user/Developer/tinyurl/TinyUrlService/obj/Debug/net9.0/TinyUrlService.RazorAssemblyInfo.cs
