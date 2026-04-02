@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # ASP.NET Core Application
+  webapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # Use service names as hostnames for connections
+      - ConnectionStrings__DefaultConnection=Host=postgres_db;Database=myapp;Username=postgres;Password=yourpassword
+      - ConnectionStrings__Redis=redis_cache:6379
+    depends_on:
+      - postgres_db
+      - redis_cache
+
+  # PostgreSQL Database
+  postgres_db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=yourpassword
+      - POSTGRES_DB=myapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # Redis Cache
+  redis_cache:
+    image: redis:latest
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres-data:

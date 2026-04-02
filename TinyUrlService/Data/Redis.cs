@@ -8,11 +8,11 @@ public class Redis
 
     public Redis(IConfiguration config)
     {
-        var redisUrl = Environment.GetEnvironmentVariable("REDIS_CONNECTION") ?? config.GetConnectionString("Redis");
+        var redisUrl = Environment.GetEnvironmentVariable("Redis") ?? config.GetConnectionString("Redis");
         ;
 
         var options = ConfigurationOptions.Parse(redisUrl);
-        options.Ssl = true;                 // Upstash requires TLS
+        options.Ssl = false;                 // Upstash requires TLS
         options.AbortOnConnectFail = false; // don't crash on startup
 
         var connection = ConnectionMultiplexer.Connect(options);

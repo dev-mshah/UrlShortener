@@ -7,6 +7,9 @@ public class IndexModel : PageModel
     private readonly UrlService _service;
     private readonly IHttpContextAccessor _context;
 
+    [BindProperty] // <-- THIS is the key
+    public string? LongUrl { get; set; }
+
     public string? ShortUrl { get; set; }
 
     public IndexModel(UrlService service, IHttpContextAccessor context)
@@ -19,18 +22,17 @@ public class IndexModel : PageModel
     {
     }
 
-    public async Task<IActionResult> OnPostAsync(string LongUrl)
+    public async Task<IActionResult> OnPostAsync()
     {
         if (string.IsNullOrEmpty(LongUrl))
-            return Page(); // just redisplay if empty
+            return Page();
 
         var shortId = await _service.CreateShortUrl(LongUrl);
 
         var req = _context.HttpContext!.Request;
         var baseUrl = $"{req.Scheme}://{req.Host}";
 
-        ShortUrl = $"{baseUrl}/{shortId}";
-
-        return Page(); // <-- this is key
+        ShortUrl = $"{baseUrl}/r/{shortId}";
+        return Page();
     }
 }

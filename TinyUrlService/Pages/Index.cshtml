@@ -1,15 +1,15 @@
 @page
 @model IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <h1>URL Shortener</h1>
 
-<form method="post">
-    <input type="text" name="LongUrl" placeholder="Enter URL" style="width:300px;" />
+<form method="post" asp-page="Index">
+    <input asp-for="LongUrl" placeholder="Enter URL" style="width:300px;" />
     <button type="submit">Shorten</button>
 </form>
 
-@if (Model.ShortUrl != null)
+@if (!string.IsNullOrEmpty(Model.ShortUrl))
 {
-    <p>Your short URL:</p>
-    <a href="@Model.ShortUrl">@Model.ShortUrl</a>
+    <p>Your short URL: <a href="@Model.ShortUrl">@Model.ShortUrl</a></p>
 }

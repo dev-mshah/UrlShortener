@@ -31,7 +31,7 @@ app.MapPost("/shorten", async (CreateUrlRequest req, UrlService urlService) =>
     });
 });
 
-app.MapGet("/{shortId}", async (string shortId, Redis redis, Postgres postgres) =>
+app.MapGet("/r/{shortId}", async (string shortId, Redis redis, Postgres postgres) =>
 {
     var longUrl = await redis.Db.StringGetAsync(shortId);
 
