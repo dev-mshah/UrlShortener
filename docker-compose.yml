@@ -11,7 +11,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       # Use service names as hostnames for connections
-      - ConnectionStrings__DefaultConnection=Host=postgres_db;Database=myapp;Username=postgres;Password=yourpassword
+      - ConnectionStrings__Postgres=Host=postgres_db;Database=myapp;Username=postgres;Password=yourpassword
       - ConnectionStrings__Redis=redis_cache:6379
     depends_on:
       - postgres_db
@@ -28,6 +28,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres-data:/var/lib/postgresql/data
 
   # Redis Cache
