@@ -1,7 +1,5 @@
 # TinyUrl Service — Architecture & Caching Strategy
 
-This document explains the core design and caching strategy used by the TinyUrl Service, focusing on how we generate collision-free short IDs, how we populate and maintain cache state, and the trade-offs made to demonstrate SDE II engineering practices.
-
 **Repository pointers**
 - `Services/UrlService.cs`: main URL creation & lookup flow
 - `Utils/SqidsGenerator.cs`: transforms global numeric IDs into compact, collision-resistant strings
@@ -67,30 +65,3 @@ Scalability and operations
 - Observability: track metrics for cache hit rate, cache misses per second, DB latency, counter allocation latency, and number of holes (if tracking lost IDs).
 - Backups & recovery: Postgres backups are the canonical source; Redis backup/replication helps fast warm restarts but is not required for correctness.
 
-Trade-offs and rationale (SDE II mindset)
---------------------------------------
-- Simplicity vs. correctness: a global counter + SQIDs is simple and collision-free; it trades off perfect sequential density for simplicity (holes are acceptable).
-- Read optimization: prioritizing a cache-first design minimizes latency for the most common operation (redirect).
-- Observability & resilience: designing for clear metrics and predictable failure modes demonstrates engineering maturity.
-
-Testing & validation
---------------------
-- Unit tests: cover `SqidsGenerator.cs` encoding/decoding for a variety of salts and lengths.
-- Integration tests: verify create -> DB write -> cache write sequence and cache-miss repopulation.
-- Load tests: measure cache hit rate and the counter allocation path under realistic write QPS.
-
-Next steps / Suggestions
-------------------------
-- Add an architecture diagram to complement this README.
-- Add a small section in `Services/UrlService.cs` documenting the exact counter implementation used (DB sequence vs. Redis INCR).
-- Add automated tests that assert cache repopulation on miss and idempotent behavior under concurrent creation requests.
-
-Why this showcases SDE II skills
---------------------------------
-- System design: clear, scalable pattern for generating collision-free IDs and serving high-throughput reads.
-- Trade-off analysis: explicit reasoning about TTLs, counter gaps, and failure modes.
-- Engineering quality: focus on observability, testing, and operational concerns (locks, retries, and metrics).
-
-If you'd like, I can:
-- Add diagrams, example sequences, or a short `curl` example for quick local testing.
-- Run or suggest tests to validate the flow.
