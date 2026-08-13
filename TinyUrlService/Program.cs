@@ -18,6 +18,8 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+
 app.MapPost("/shorten", async (CreateUrlRequest req, UrlService urlService) =>
 {
 

@@ -2,28 +2,29 @@
 @model IndexModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<div
-    style="max-width: 450px; margin: 60px auto; padding: 30px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); text-align: center;">
+<head>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
 
-    <h1 style="color: #1a1f36; font-size: 28px; font-weight: 700; margin-bottom: 24px; margin-top: 0;">URL Shortener
-    </h1>
+<div class="url-shortener">
+    <h1>URL Shortener</h1>
 
-    <form method="post" asp-page="Index" style="display: flex; gap: 8px;">
-        <input asp-for="LongUrl" placeholder="Paste your long link here..."
-               style="flex: 1; padding: 12px 16px; border: 1px solid #e3e8ee; border-radius: 6px; font-size: 15px; transition: all 0.2s ease; outline: none;"
-               onfocus="this.style.borderColor='#635bff'; this.style.boxShadow='0 0 0 3px rgba(99, 91, 255, 0.15)';"
-               onblur="this.style.borderColor='#e3e8ee'; this.style.boxShadow='none';" />
+    <form method="post" asp-page="Index" class="url-form">
+        <input asp-for="LongUrl" class="url-input" placeholder="Paste your long link here..." />
 
-        <button type="submit"
-                style="background-color: #635bff; color: white; border: none; border-radius: 6px; padding: 12px 20px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease;"
-                onmouseover="this.style.backgroundColor='#4338ca'" onmouseout="this.style.backgroundColor='#635bff'">
+        <button type="submit" class="shorten-button">
             Shorten
         </button>
     </form>
 
-</div>
+    @if (!string.IsNullOrEmpty(Model.ShortUrl))
+    {
+        <div class="result">
+            <span class="result-label">Your short URL</span>
 
-@if (!string.IsNullOrEmpty(Model.ShortUrl))
-{
-    <p>Your short URL: <a href="@Model.ShortUrl">@Model.ShortUrl</a></p>
-}
+            <a href="@Model.ShortUrl" class="short-url">
+                @Model.ShortUrl
+            </a>
+        </div>
+    }
+</div>
