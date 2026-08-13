@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # ASP.NET Core Application
   webapi:
     build:
       context: .
@@ -10,14 +9,14 @@ services:
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      # Use service names as hostnames for connections
       - ConnectionStrings__Postgres=Host=postgres_db;Database=myapp;Username=postgres;Password=yourpassword
       - ConnectionStrings__Redis=redis_cache:6379
     depends_on:
-      - postgres_db
-      - redis_cache
+      postgres_db:
+        condition: service_healthy # Wait until Postgres is fully booted, not just starting
+      redis_cache:
+        condition: service_started
 
-  # PostgreSQL Database
   postgres_db:
     image: postgres:latest
     container_name: postgres_db
@@ -30,13 +29,21 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres-data:/var/lib/postgresql/data
+    healthcheck: # Ensures webapi doesn't hit it too early
+      test: ["CMD-SHELL", "pg_isready -U postgres -d myapp"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  # Redis Cache
   redis_cache:
     image: redis:latest
     container_name: redis_cache
+    command: redis-server --appendonly yes # Forces Redis to save changes to disk instantly
     ports:
       - "6379:6379"
+    volumes:
+      - redis-data:/data # Persists the Redis data across restarts
 
 volumes:
   postgres-data:
+  redis-data: # New volume for Redis

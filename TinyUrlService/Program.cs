@@ -33,8 +33,10 @@ app.MapPost("/shorten", async (CreateUrlRequest req, UrlService urlService) =>
     });
 });
 
-app.MapGet("/r/{shortId}", async (string shortId, Redis redis, Postgres postgres) =>
+app.MapGet("/{shortId}", async (string shortId, Redis redis, Postgres postgres) =>
 {
+
+    Console.WriteLine($"Received request for shortId: {shortId}");
     // Use Redis Cache To Get Long URL to reduce Latency  
     var longUrl = await redis.Db.StringGetAsync(shortId);
 

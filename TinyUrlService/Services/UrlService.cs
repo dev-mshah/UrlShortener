@@ -20,6 +20,14 @@ public class UrlService
 
     public async Task<string> CreateShortUrl(string longUrl)
     {
+        // Ensure the URL has a scheme; default to https if missing
+        if (!longUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+            !longUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            longUrl = "https://" + longUrl;
+        }
+
+
         // For each URL we get, we will keep a counter and increment each time
         // Each counter value is unique, eliminating the risk of collisions without the need for additional checks.
         var id = await _redis.Db.StringIncrementAsync("url_counter");

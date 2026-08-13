@@ -32,7 +32,7 @@ public class IndexModel : PageModel
         var req = _context.HttpContext!.Request;
         var baseUrl = $"{req.Scheme}://{req.Host}";
 
-        ShortUrl = $"{baseUrl}/r/{shortId}";
+        ShortUrl = $"{baseUrl}/{shortId}";
         return Page();
     }
 }
